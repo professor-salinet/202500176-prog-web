@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>24-07-25</title>
+    <style>
+        body {
+            margin: 0px;
+            padding: 0px;
+            border: 0px;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+    <div id="divFoto">
+        <img id="imgFoto" src="./foto.jpg" />
+    </div>
+    <script>
+        function redimensionarImagem() {
+            console.clear();
+            const larguraPagina = window.innerWidth;
+            console.log("larguraPagina:", larguraPagina);
+            const alturaPagina = window.innerHeight;
+            console.log("alturaPagina:", alturaPagina);
+
+            const imgFoto = document.getElementById("imgFoto");
+            const divFoto = document.getElementById("divFoto");
+
+            // imgFoto.style.borderRadius = "20px";
+            divFoto.style.textAlign = "center";
+
+            // imgFoto.style.width = (larguraPagina + 10) + "px";
+            // imgFoto.style.height = (alturaPagina + 10) + "px";
+            imgFoto.style.height = alturaPagina + "px";
+            imgFoto.style.width = larguraPagina + "px";
+            // imgFoto.style.height = "100%";
+            // imgFoto.style.width = "100%";
+
+            // imgFoto.width = "100";
+        }
+
+        redimensionarImagem();
+        window.addEventListener('resize', redimensionarImagem);
+    </script>
+</body>
+</html>
