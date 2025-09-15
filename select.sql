@@ -1,0 +1,1 @@
+select * from `senac`.`tbl_login`;
