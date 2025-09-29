@@ -24,7 +24,7 @@ function programarDespertador(hora, minuto) {
             horaAtual = data.getHours();
             minutoAtual = data.getMinutes();
             segundoAtual = data.getSeconds();
-            // console.clear();
+            console.clear();
             console.log("Agora são: " + horaAtual + ":" + minutoAtual + ":" + segundoAtual);
             console.log("O despertador está programado para notificar às: " + hora + ":" + minuto);
             if (parseInt(horaAtual) >= hora) {
