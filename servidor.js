@@ -1,13 +1,56 @@
 import express from 'express';
 import cors from 'cors';
+import mysql from 'mysql2/promise';
 
 const app = express();
 const PORT = 80;
+
+var strSql = "";
+var pool;
+
+// Aqui estou definindo as variáveis padrão para uso na conexão com o servidor mysql local
+var srvHost = '127.0.0.1';
+var srvPort = '3306';
+var srvUser = 'root';
+var srvPassword = 'senac@02';
+var srvDatabase = 'senac';
+
+pool = mysql.createPool({
+    host: srvHost,
+    port: srvPort,
+    user: srvUser,
+    password: srvPassword,
+    database: srvDatabase
+});
 
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('.'));
+
+app.post('/login', async (req, res) => {
+
+    const { login, senha } = req.body;
+
+    try {
+        strSql = "select * from `" + srvDatabase + "`.`tbl_login` where `login` = '" + login + "' and `senha` = md5('" + senha + "');";
+        var [rows, fields] = await pool.query(strSql);
+        if (rows.length == 1) {
+            res.json({ 
+                message: 'Usuário logado com sucesso! Redirecionando...',
+                id: rows[0].id
+            });
+        } else {
+            throw ("Não foi possível logar o usuário! Cadastro inválido ou duplicado.");
+        }
+    } catch (err) {
+        // console.error(err); // aqui não vai aparecer o erro no console, pois este arquivo não é processado pelo frontend, mas sim pelo backend (node server.js)
+        res.status(500).json({ 
+            message: `Erro de login: ${err}`,
+            error: `Erro de login: ${err}`
+        });
+    }
+});
 
 app.listen(PORT, () => {
     console.log(`Servidor rodando em http://localhost:${PORT}`);
