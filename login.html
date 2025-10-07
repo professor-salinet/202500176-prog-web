@@ -18,10 +18,19 @@
         <br/>
         <input class="control" id="txt_senha" type="password" />
         <br/>
-        <button class="btn btn-primary">Entrar</button>
-        <button class="btn btn-secondary">Cadastrar</button>
-        <button class="btn btn-danger">Limpar</button>
+        <button type="submit" class="btn btn-primary" id="btn_entrar">Entrar</button>
+        <a href="cadastrar.html" class="btn btn-secondary" target="_blank">Cadastrar</a>
+        <button type="cancel" class="btn btn-danger" id="btn_limpar">Limpar</button>
+        <br/>
+        <input type="radio" id="rdg_manter_conectado" name="rdg_options">
+        <label for="rdg_manter_conectado">Manter Conectado</label>
+        <br/>
+        <input type="radio" id="rdg_salvar_senha" name="rdg_options">
+        <label for="rdg_salvar_senha">Salvar Senha</label>
+        <br/>
+        <div class="container" id="div_notificacoes">Notificações</div>
     </form>
     <script src="./node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="./login.js"></script>
 </body>
 </html>
