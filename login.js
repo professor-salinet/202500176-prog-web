@@ -18,5 +18,42 @@ btn_limpar.addEventListener('click', () => {
 
 frm_login.addEventListener('submit', async (e) => {
     e.preventDefault();
-    return false;
+    // return false;
+    const login = txt_login.value.trim();
+    const senha = txt_senha.value.trim();
+
+    if (login.length == 0) {
+        div_notificacoes.innerText = "É necessário digitar um login para continuar!";
+        alert("É necessário digitar um login para continuar!");
+        txt_login.focus();
+        return false;
+    }
+
+    if (senha.length == 0) {
+        div_notificacoes.innerText = "É necessário digitar uma senha para continuar!";
+        alert("É necessário digitar uma senha para continuar!");
+        txt_senha.focus();
+        return false;
+    }
+
+    const response = await fetch('/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ login, senha })
+    });
+
+    const result = await response.json();
+
+    if (result.error) {
+        div_notificacoes.innerText = result.error;
+        alert(result.error);
+        return false;
+    } else {
+        div_notificacoes.innerText = result.message;
+        alert(result.message);
+        localStorage.setItem('usuario_logado', result.id);
+        window.setTimeout(() => {
+            window.open('./principal.html', '_self');
+        }, 5000);
+    }
 });
