@@ -88,3 +88,4 @@ function setCookie(cname, cvalue, exdays) {
 // Cria um cookie chamado 'usuario' com o valor '0' que expira em 30 dias
 //setCookie("usuario", "0", 30);
 
+txt_login.focus();

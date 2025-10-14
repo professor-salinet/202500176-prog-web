@@ -9,11 +9,11 @@ div_polite.style.zIndex = "1050";
 
 const divNotificacoesOk = document.createElement('div');
 divNotificacoesOk.id = "divNotificacoesOk";
-divNotificacoesOk.classList.add("toast")
-divNotificacoesOk.role = "alert"
+divNotificacoesOk.classList.add("toast");
+divNotificacoesOk.role = "alert";
 divNotificacoesOk.ariaLive = "assertive";
 divNotificacoesOk.ariaAtomic = "true";
-divNotificacoesOk.dataset.bsDelay = "5000";
+// divNotificacoesOk.dataset.bsDelay = "5000";
 
 const div_toast_header = document.createElement('div');
 div_toast_header.classList.add("toast-header");
@@ -40,6 +40,7 @@ div_toast_header.appendChild(btn_close);
 const div_toast_body = document.createElement('div');
 div_toast_body.classList.add("toast-body");
 div_toast_body.classList.add("alert");
+div_toast_body.classList.add("mb-0");
 div_toast_body.innerText = "Esta é a sua notificação flutuante fixa em Bootstrap 5.3!";
 
 divNotificacoesOk.appendChild(div_toast_header);
