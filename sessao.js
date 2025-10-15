@@ -1,5 +1,3 @@
-console.log(typeof pg_login);
-
 if (!localStorage.getItem('usuario_logado')) {
     if (typeof pg_login == "undefined") {
         notificarNok("Acesso restrito! Necessário realizar o login! Redirecionando...");
