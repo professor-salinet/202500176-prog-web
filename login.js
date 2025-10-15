@@ -1,3 +1,5 @@
+const pg_login = true;
+
 const txt_login = document.getElementById("txt_login");
 const txt_senha = document.getElementById("txt_senha");
 const btn_entrar = document.getElementById("btn_entrar");
@@ -54,7 +56,7 @@ frm_login.addEventListener('submit', async (e) => {
 
     if (result.error) {
         notificarNok(result.error);
-        alert(result.error);
+        // alert(result.error);
         return false;
     } else {
         notificarOk(result.message);

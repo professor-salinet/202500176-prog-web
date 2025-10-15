@@ -1,3 +1,8 @@
+function delCookie(cname) {
+    // Define a data de expiração para um momento no passado (por exemplo, 1º de janeiro de 1970)
+    document.cookie = cname + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+}
+
 /**
  * 
  * @param {cookie name} cname (nome do cookie)
