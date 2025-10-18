@@ -38,7 +38,8 @@ function getCookie(cname) {
 }
 
 const codUsuario = getCookie("usuario");
-if (codUsuario !== "") {
+console.log(codUsuario);
+if (codUsuario) {
     notificarOk("Bem-vindo de volta, " + codUsuario + "! Você será redirecionado para a página principal em " + (5000 / 1000) + " segundos.");
     window.setTimeout(() => {
         window.open('./principal.html', '_self');
