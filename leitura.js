@@ -38,10 +38,15 @@ frm_pesquisar.addEventListener('submit', async (e) => {
 
     if (result.error) {
         notificarNok(result.error);
+        txt_id.value = "";
+        txt_nome.value = "";
+        txt_login.value = "";
         return false;
     } else {
         notificarOk(result.message);
-        // Aqui vai preencher os campos somente com o termo pesquisado
+        txt_id.value = result.id;
+        txt_nome.value = result.nome;
+        txt_login.value = result.login;
     }
 });
 
