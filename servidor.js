@@ -86,6 +86,54 @@ app.post('/cadastrar', async (req, res) => {
     }
 });
 
+app.post('/pesquisar', async (req, res) => {
+
+    const { pesquisar } = req.body;
+
+    try {
+        strSql = "select * from `" + srvDatabase + "`.`tbl_login` where `nome` like '%" + pesquisar + "%' or `login` like '%" + pesquisar + "%' order by `id` asc;";
+        var [rows, fields] = await pool.query(strSql);
+        if (rows.length > 0) {
+            res.json({ 
+                message: 'Nome ou login encontrado com sucesso!',
+                id: rows[0].id,
+                nome: rows[0].nome,
+                login: rows[0].login,
+                linhas: rows
+            });
+        } else {
+            throw ("Não foi possível encontrar o nome ou login!");
+        }
+    } catch (err) {
+        // console.error(err); // aqui não vai aparecer o erro no console, pois este arquivo não é processado pelo frontend, mas sim pelo backend (node server.js)
+        res.status(500).json({ 
+            message: `Erro de leitura: ${err}`,
+            error: `Erro de leitura: ${err}`
+        });
+    }
+});
+
+app.post('/atualizacao', async (req, res) => {
+    try {
+        strSql = "select `nome`,`login` from `" + srvDatabase + "`.`tbl_login` order by `id` asc;";
+        var [rows, fields] = await pool.query(strSql);
+        if (rows.length > 0) {
+            res.json({ 
+                message: 'Registros encontrados com sucesso!',
+                rows: rows
+            });
+        } else {
+            throw ("Não há registro algum na tabela tbl_login!");
+        }
+    } catch (err) {
+        // console.error(err); // aqui não vai aparecer o erro no console, pois este arquivo não é processado pelo frontend, mas sim pelo backend (node server.js)
+        res.status(500).json({ 
+            message: `Erro de atualização: ${err}`,
+            error: `Erro de atualização: ${err}`
+        });
+    }
+});
+
 app.listen(PORT, () => {
     console.log(`Servidor rodando em http://localhost:${PORT}`);
 });

@@ -59,7 +59,6 @@ frm_login.addEventListener('submit', async (e) => {
 
     if (result.error) {
         notificarNok(result.error);
-        alert(result.error);
         return false;
     } else {
         notificarOk(result.message + " Redirecionando...");
