@@ -1,6 +1,8 @@
 const frm_pesquisar = document.getElementById("frm_pesquisar");
 
-const sel_id = document.getElementById("sel_id");
+const txt_id = document.getElementById("txt_id");
+const txt_nome = document.getElementById("txt_nome");
+const txt_login = document.getElementById("txt_login");
 const txt_pesquisar = document.getElementById("txt_pesquisar");
 
 const btn_pesquisar = document.getElementById("btn_pesquisar");
@@ -43,7 +45,7 @@ frm_pesquisar.addEventListener('submit', async (e) => {
     }
 });
 
-async function carregarCampos(pesquisa) {
+async function carregarCampos() {
     const pesquisar = txt_pesquisar.value.trim();
 
     const response = await fetch('/atualizacao', {
@@ -58,7 +60,10 @@ async function carregarCampos(pesquisa) {
         notificarNok(result.error);
     } else {
         notificarOk(result.message);
-        console.log(result.rows);
+        txt_id.value = result.rows[0].id;
+        txt_nome.value = result.rows[0].nome;
+        txt_login.value = result.rows[0].login;
+        // console.log(result.rows);
     }
 }
 

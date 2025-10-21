@@ -115,7 +115,7 @@ app.post('/pesquisar', async (req, res) => {
 
 app.post('/atualizacao', async (req, res) => {
     try {
-        strSql = "select `nome`,`login` from `" + srvDatabase + "`.`tbl_login` order by `id` asc;";
+        strSql = "select `id`, `nome`, `login` from `" + srvDatabase + "`.`tbl_login` order by `id` asc;";
         var [rows, fields] = await pool.query(strSql);
         if (rows.length > 0) {
             res.json({ 
