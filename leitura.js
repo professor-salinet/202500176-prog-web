@@ -64,13 +64,113 @@ async function carregarCampos() {
     if (result.error) {
         notificarNok(result.error);
     } else {
-        notificarOk(result.message);
+        notificarOk("Primeiro registro posicionado com sucesso!");
+
         txt_id.value = result.rows[0].id;
         txt_nome.value = result.rows[0].nome;
         txt_login.value = result.rows[0].login;
-        // console.log(result.rows);
+
+        btn_primeiro.disabled = true;
+        btn_anterior.disabled = true;
     }
 }
+
+btn_primeiro.addEventListener('click', () => {
+    carregarCampos();
+    btn_proximo.disabled = false;
+    btn_ultimo.disabled = false;
+});
+
+btn_anterior.addEventListener('click', async (e) => {
+    e.preventDefault();
+    const id = txt_id.value.trim();
+    const pesquisar = txt_pesquisar.value.trim();
+
+    const response = await fetch('/anterior', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id, pesquisar })
+    });
+
+    const result = await response.json();
+
+    if (result.error) {
+        notificarNok("Não há registro anterior!");
+
+        btn_primeiro.disabled = true;
+        btn_anterior.disabled = true;
+        btn_proximo.disabled = false;
+        btn_ultimo.disabled = false;
+    } else {
+        notificarOk("Registro anterior posicionado com sucesso!");
+
+        txt_id.value = result.id;
+        txt_nome.value = result.nome;
+        txt_login.value = result.login;
+
+        btn_proximo.disabled = false;
+        btn_ultimo.disabled = false;
+    }
+});
+
+btn_proximo.addEventListener('click', async (e) => {
+    e.preventDefault();
+    const id = txt_id.value.trim();
+    const pesquisar = txt_pesquisar.value.trim();
+
+    const response = await fetch('/proximo', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id, pesquisar })
+    });
+
+    const result = await response.json();
+
+    if (result.error) {
+        notificarNok("Não há registro posterior!");
+        btn_primeiro.disabled = false;
+        btn_anterior.disabled = false;
+        btn_proximo.disabled = true;
+        btn_ultimo.disabled = true;
+    } else {
+        notificarOk("Registro posterior posicionado com sucesso!");
+
+        txt_id.value = result.id;
+        txt_nome.value = result.nome;
+        txt_login.value = result.login;
+
+        btn_primeiro.disabled = false;
+        btn_anterior.disabled = false;
+    }
+});
+
+btn_ultimo.addEventListener('click', async (e) => {
+    e.preventDefault();
+    const pesquisar = txt_pesquisar.value.trim();
+
+    const response = await fetch('/ultimo', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ pesquisar })
+    });
+
+    const result = await response.json();
+
+    if (result.error) {
+        notificarNok("Não há registro posterior!");
+    } else {
+        notificarOk("Último registro posicionado com sucesso!");
+
+        txt_id.value = result.id;
+        txt_nome.value = result.nome;
+        txt_login.value = result.login;
+
+        btn_primeiro.disabled = false;
+        btn_anterior.disabled = false;
+        btn_ultimo.disabled = true;
+        btn_proximo.disabled = true;
+    }
+});
 
 carregarCampos();
 txt_pesquisar.focus();
