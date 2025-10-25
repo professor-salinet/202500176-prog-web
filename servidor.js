@@ -99,6 +99,7 @@ app.post('/pesquisar', async (req, res) => {
                 id: rows[0].id,
                 nome: rows[0].nome,
                 login: rows[0].login,
+                login: rows[0].senha,
                 linhas: rows
             });
         } else {
@@ -115,7 +116,7 @@ app.post('/pesquisar', async (req, res) => {
 
 app.post('/atualizacao', async (req, res) => {
     try {
-        strSql = "select `id`, `nome`, `login` from `" + srvDatabase + "`.`tbl_login` order by `id` asc;";
+        strSql = "select `id`, `nome`, `login`, `senha` from `" + srvDatabase + "`.`tbl_login` order by `id` asc;";
         var [rows, fields] = await pool.query(strSql);
         if (rows.length > 0) {
             res.json({ 
