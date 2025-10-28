@@ -99,7 +99,7 @@ app.post('/pesquisar', async (req, res) => {
                 id: rows[0].id,
                 nome: rows[0].nome,
                 login: rows[0].login,
-                login: rows[0].senha,
+                senha: rows[0].senha,
                 linhas: rows
             });
         } else {

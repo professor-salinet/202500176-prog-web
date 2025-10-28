@@ -4,6 +4,7 @@ const txt_id = document.getElementById("txt_id");
 const txt_nome = document.getElementById("txt_nome");
 const txt_login = document.getElementById("txt_login");
 const txt_senha = document.getElementById("txt_senha");
+const txt_confirma_senha = document.getElementById("txt_confirma_senha");
 const txt_pesquisar = document.getElementById("txt_pesquisar");
 
 const hdn_nome_carregado = document.getElementById("hdn_nome_carregado");
@@ -21,6 +22,8 @@ const btn_ultimo = document.getElementById("btn_ultimo");
 
 btn_limpar.addEventListener('click', () => {
     txt_pesquisar.value = "";
+    btn_pesquisar.disabled = true;
+    btn_limpar.disabled = true;
     txt_pesquisar.focus();
 });
 
@@ -47,6 +50,12 @@ frm_pesquisar.addEventListener('submit', async (e) => {
         txt_id.value = "";
         txt_nome.value = "";
         txt_login.value = "";
+        txt_senha.value = "";
+        txt_confirma_senha.value = "";
+        btn_primeiro.disabled = false;
+        btn_anterior.disabled = true;
+        btn_proximo.disabled = true;
+        btn_ultimo.disabled = true;
         return false;
     } else {
         notificarOk(result.message);
@@ -137,6 +146,7 @@ async function carregarCampos() {
 
         btn_primeiro.disabled = true;
         btn_anterior.disabled = true;
+        btn_atualizar.disabled = true;
     }
 }
 
@@ -237,5 +247,63 @@ btn_ultimo.addEventListener('click', async (e) => {
     }
 });
 
+function verificarCampos() {
+    const nome = txt_nome.value.trim();
+    const login = txt_login.value.trim();
+    const senha = txt_senha.value.trim();
+
+    const nome_carregado = hdn_nome_carregado.value.trim();
+    const login_carregado = hdn_login_carregado.value.trim();
+    const senha_carregada = hdn_senha_carregada.value.trim();
+
+    if (nome != nome_carregado) {
+        return false;
+    }
+    if (login != login_carregado) {
+        return false;
+    }
+    if (senha != senha_carregada) {
+        return false;
+    }
+    return true;
+}
+
+txt_nome.addEventListener('keyup', () => {
+    if (verificarCampos() == false) {
+        btn_atualizar.disabled = false;
+    } else {
+        btn_atualizar.disabled = true;
+    }
+});
+
+txt_login.addEventListener('keyup', () => {
+    if (verificarCampos() == false) {
+        btn_atualizar.disabled = false;
+    } else {
+        btn_atualizar.disabled = true;
+    }
+});
+
+txt_senha.addEventListener('keyup', () => {
+    if (verificarCampos() == false) {
+        btn_atualizar.disabled = false;
+    } else {
+        btn_atualizar.disabled = true;
+    }
+});
+
+txt_pesquisar.addEventListener('keyup', () => {
+    const pesquisa = txt_pesquisar.value.trim();
+    if (pesquisa.length > 0) {
+        btn_pesquisar.disabled = false;
+        btn_limpar.disabled = false;
+    } else {
+        btn_pesquisar.disabled = true;
+        btn_limpar.disabled = true;
+    }
+});
+
 carregarCampos();
 txt_pesquisar.focus();
+btn_pesquisar.disabled = true;
+btn_limpar.disabled = true;
