@@ -80,8 +80,8 @@ app.post('/cadastrar', async (req, res) => {
     } catch (err) {
         // console.error(err); // aqui não vai aparecer o erro no console, pois este arquivo não é processado pelo frontend, mas sim pelo backend (node server.js)
         res.status(500).json({ 
-            message: `Erro de cadastro: ${err} ${domain}`,
-            error: `Erro de cadastro: ${err} ${domain}`
+            message: `Erro de cadastro: ${err}`,
+            error: `Erro de cadastro: ${err}`
         });
     }
 });
@@ -213,6 +213,62 @@ app.post('/ultimo', async (req, res) => {
             });
         } else {
             throw ("Não há registro algum na tabela tbl_login!");
+        }
+    } catch (err) {
+        // console.error(err); // aqui não vai aparecer o erro no console, pois este arquivo não é processado pelo frontend, mas sim pelo backend (node server.js)
+        res.status(500).json({ 
+            message: `Erro de atualização: ${err}`,
+            error: `Erro de atualização: ${err}`
+        });
+    }
+});
+
+app.post('/atualizar', async (req, res) => {
+
+    const { id, nome, login, senha } = req.body;
+    var alteracoes = "";
+
+    try {
+        if (login.length > 0) {
+            strSql = "select * from `" + srvDatabase + "`.`tbl_login` where `login` = '" + login + "';";
+            var [rows, fields] = await pool.query(strSql);
+            if (rows.length == 1) {
+                res.json({ 
+                    message: 'Login já cadastrado!',
+                    error: 'Favor digitar outro login!'
+                });
+                throw('Login já cadastrado!');
+                // version 1.0.1: correção de bug que permite cadastrar dois usuários com mesmo login
+                // depois esta correção se transformará em uma feature (melhoria) que vai ser versionada na próxima versão da feature, ou seja: 
+                // version: 1.1.0
+            }
+        }
+        if (nome.length > 0) {
+            alteracoes = "`nome` = '" + nome + "'";
+        }
+
+        if (login.length > 0) {
+            if (alteracoes.length > 0) {
+                alteracoes += " and ";
+            }
+            alteracoes += "`login` = '" + login + "'";
+        }
+
+        if (senha.length > 0) {
+            if (alteracoes.length > 0) {
+                alteracoes += " and ";
+            }
+            alteracoes += "`senha` = '" + senha + "'";
+        }
+
+        var [rows, fields] = await pool.query(
+            "update `" + srvDatabase + "`.`tbl_login` set " + alteracoes + " where `id` = " + id + ";"
+        );
+
+        if (rows.affectedRows > 0) {
+            res.json({ message: 'Usuário atualizado com sucesso!' });
+        } else {
+            throw ('Não foi possível atualizar o usuário!');
         }
     } catch (err) {
         // console.error(err); // aqui não vai aparecer o erro no console, pois este arquivo não é processado pelo frontend, mas sim pelo backend (node server.js)

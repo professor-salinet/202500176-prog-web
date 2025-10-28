@@ -71,6 +71,7 @@ frm_pesquisar.addEventListener('submit', async (e) => {
 
 btn_atualizar.addEventListener('click', async (e) => {
     e.preventDefault();
+    const id = txt_id.value.trim();
     const nome = txt_nome.value.trim();
     const login = txt_login.value.trim();
     const senha = txt_senha.value.trim();
@@ -98,10 +99,14 @@ btn_atualizar.addEventListener('click', async (e) => {
         return false;
     }
 
-    const response = await fetch('/pesquisar', {
+    if (login == login_carregado) {
+        login = "";
+    }
+
+    const response = await fetch('/atualizar', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ pesquisar })
+        body: JSON.stringify({ id, nome, login, senha })
     });
 
     const result = await response.json();
