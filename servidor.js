@@ -258,12 +258,12 @@ app.post('/atualizar', async (req, res) => {
             if (alteracoes.length > 0) {
                 alteracoes += " and ";
             }
-            alteracoes += "`senha` = '" + senha + "'";
+            alteracoes += "`senha` = md5('" + senha + "')";
         }
 
-        var [rows, fields] = await pool.query(
-            "update `" + srvDatabase + "`.`tbl_login` set " + alteracoes + " where `id` = " + id + ";"
-        );
+        strSql = "update `" + srvDatabase + "`.`tbl_login` set " + alteracoes + " where `id` = " + id + ";";
+        console.log(strSql);
+        var [rows, fields] = await pool.query(strSql);
 
         if (rows.affectedRows > 0) {
             res.json({ message: 'Usuário atualizado com sucesso!' });

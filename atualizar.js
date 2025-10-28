@@ -48,10 +48,15 @@ frm_pesquisar.addEventListener('submit', async (e) => {
     if (result.error) {
         notificarNok(result.error);
         txt_id.value = "";
+
         txt_nome.value = "";
+        hdn_nome_carregado.value = "";
         txt_login.value = "";
+        hdn_login_carregado.value = "";
         txt_senha.value = "";
+        hdn_senha_carregada.value = "";
         txt_confirma_senha.value = "";
+
         btn_primeiro.disabled = false;
         btn_anterior.disabled = true;
         btn_proximo.disabled = true;
@@ -72,9 +77,9 @@ frm_pesquisar.addEventListener('submit', async (e) => {
 btn_atualizar.addEventListener('click', async (e) => {
     e.preventDefault();
     const id = txt_id.value.trim();
-    const nome = txt_nome.value.trim();
-    const login = txt_login.value.trim();
-    const senha = txt_senha.value.trim();
+    var nome = txt_nome.value.trim();
+    var login = txt_login.value.trim();
+    var senha = txt_senha.value.trim();
     const confirma_senha = txt_confirma_senha.value.trim();
 
     const nome_carregado = hdn_nome_carregado.value.trim();
@@ -97,10 +102,24 @@ btn_atualizar.addEventListener('click', async (e) => {
         notificarNok("É necessário digitar uma senha para atualizar!");
         txt_senha.focus();
         return false;
+    } else {
+        if (senha != confirma_senha) {
+            notificarNok("As senhas não conferem! Verifique a digitação e tente novamente.");
+            txt_confirma_senha.focus();
+            return false;
+        }
+    }
+
+    if (nome == nome_carregado) {
+        nome = "";
     }
 
     if (login == login_carregado) {
         login = "";
+    }
+
+    if (senha == senha_carregada) {
+        senha = "";
     }
 
     const response = await fetch('/atualizar', {
@@ -113,15 +132,9 @@ btn_atualizar.addEventListener('click', async (e) => {
 
     if (result.error) {
         notificarNok(result.error);
-        txt_id.value = "";
-        txt_nome.value = "";
-        txt_login.value = "";
-        return false;
     } else {
         notificarOk(result.message);
-        txt_id.value = result.id;
-        txt_nome.value = result.nome;
-        txt_login.value = result.login;
+        btn_atualizar.disabled = true;
     }
 });
 
@@ -146,8 +159,6 @@ async function carregarCampos() {
         hdn_nome_carregado.value = result.rows[0].nome;
         txt_login.value = result.rows[0].login;
         hdn_login_carregado.value = result.rows[0].login;
-        txt_senha.value = result.rows[0].senha;
-        hdn_senha_carregada.value = result.rows[0].senha;
 
         btn_primeiro.disabled = true;
         btn_anterior.disabled = true;
@@ -267,7 +278,7 @@ function verificarCampos() {
     if (login != login_carregado) {
         return false;
     }
-    if (senha != senha_carregada) {
+    if (senha.length > 0) {
         return false;
     }
     return true;
