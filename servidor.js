@@ -161,8 +161,8 @@ app.post('/anterior', async (req, res) => {
     } catch (err) {
         // console.error(err); // aqui não vai aparecer o erro no console, pois este arquivo não é processado pelo frontend, mas sim pelo backend (node server.js)
         res.status(500).json({ 
-            message: `Erro de leitura: ${err}`,
-            error: `Erro de leitura: ${err}`
+            message: `Erro de navegação: ${err}`,
+            error: `Erro de navegação: ${err}`
         });
     }
 });
@@ -193,8 +193,8 @@ app.post('/proximo', async (req, res) => {
     } catch (err) {
         // console.error(err); // aqui não vai aparecer o erro no console, pois este arquivo não é processado pelo frontend, mas sim pelo backend (node server.js)
         res.status(500).json({ 
-            message: `Erro de leitura: ${err}`,
-            error: `Erro de leitura: ${err}`
+            message: `Erro de navegação: ${err}`,
+            error: `Erro de navegação: ${err}`
         });
     }
 });
@@ -217,8 +217,8 @@ app.post('/ultimo', async (req, res) => {
     } catch (err) {
         // console.error(err); // aqui não vai aparecer o erro no console, pois este arquivo não é processado pelo frontend, mas sim pelo backend (node server.js)
         res.status(500).json({ 
-            message: `Erro de atualização: ${err}`,
-            error: `Erro de atualização: ${err}`
+            message: `Erro de navegação: ${err}`,
+            error: `Erro de navegação: ${err}`
         });
     }
 });
@@ -275,6 +275,28 @@ app.post('/atualizar', async (req, res) => {
         res.status(500).json({ 
             message: `Erro de atualização: ${err}`,
             error: `Erro de atualização: ${err}`
+        });
+    }
+});
+
+app.post('/apagar', async (req, res) => {
+
+    const { id } = req.body;
+
+    try {
+        strSql = "delete from `" + srvDatabase + "`.`tbl_login` where `id` = " + id + ";";
+        var [rows, fields] = await pool.query(strSql);
+
+        if (rows.affectedRows > 0) {
+            res.json({ message: 'Usuário apagado com sucesso!' });
+        } else {
+            throw ('Não foi possível apagar o usuário!');
+        }
+    } catch (err) {
+        // console.error(err); // aqui não vai aparecer o erro no console, pois este arquivo não é processado pelo frontend, mas sim pelo backend (node server.js)
+        res.status(500).json({ 
+            message: `Erro de remoção: ${err}`,
+            error: `Erro de remoção: ${err}`
         });
     }
 });
