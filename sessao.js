@@ -13,4 +13,4 @@
         }, 5000);
     }
 }*/
-console.log(typeof pg_login);
+// console.log(typeof pg_login);

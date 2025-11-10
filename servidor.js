@@ -9,11 +9,11 @@ var strSql = "";
 var pool;
 
 // Aqui estou definindo as variáveis padrão para uso na conexão com o servidor mysql local
-var srvHost = '130.162.54.212'; // sql.freedb.tech 130.162.54.212
-var srvPort = '3306';
-var srvUser = 'freedb_senac_ps';
-var srvPassword = '4@fy*2XkUn#W5QQ';
-var srvDatabase = 'freedb_senac_ps';
+var srvHost = 'mysql-2f12590f-senacdb.e.aivencloud.com';
+var srvPort = '13689';
+var srvUser = 'avnadmin';
+var srvPassword = 'AVNS_6KI4uaQDxOgH5UVklkt';
+var srvDatabase = 'defaultdb';
 
 pool = mysql.createPool({
     host: srvHost,
