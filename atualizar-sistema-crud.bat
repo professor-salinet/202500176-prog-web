@@ -20,6 +20,9 @@ cd 202500176-prog-web-30-09-25-sistema-crud
 echo "Instalando dependencias"
 call npm i -y
 
+echo "Executando vscode no diretório atualizado do sistema"
+call code .
+
 echo "Executando node servidor.js"
 node servidor.js
 
